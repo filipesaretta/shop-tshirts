@@ -2,17 +2,15 @@ import { styled } from "..";
 
 export const HomeContainer = styled('div', {
   display: "flex",
-  gap: '3rem',
   width: '100%',
-  maxWidth: 'calc(100vw - ((100vw - 1180px) / 2)',
+  maxWidth: 'calc(100vw - (100vw - 1180px) / 2)',
   marginLeft: 'auto',
-  minHeight: 656
+  minHeight: 556
 })
 
 export const Product = styled('a', {
-  background: 'linear-gradient(180deg, #1ea473 0%,#7465d4 100%)',
+  background: 'linear-gradient(180deg, #1ea473 0%, #7465d4 100%)',
   borderRadius: 8,
-  padding: '.25rem',
   cursor: 'pointer',
   position: 'relative',
   overflow: 'hidden',

@@ -1,4 +1,4 @@
-import { styled } from "@stitches/react";
+import { styled } from "..";
 
 export const Container = styled('div', {
   width: '100%',
@@ -6,5 +6,5 @@ export const Container = styled('div', {
   backgroundColor: '$gray900',
   display: 'flex',
   flexDirection: 'column',
-  // justifyContent: 'center',
+  justifyContent: 'center',
 })
