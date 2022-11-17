@@ -10,11 +10,10 @@ import Link from "next/link";
 
 interface ProductsProps {
   products: {
-
     id: string,
     name: string,
     imageUrl: string,
-    price: number
+    price: string
   }[]
 }
 
