@@ -1,5 +1,7 @@
+import axios from "axios"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/image"
+import { useState } from "react"
 import Stripe from "stripe"
 import { stripe } from "../../lib/stripe"
 import { ContentContainer, ImageContainer, ProductContainer } from "../../styles/pages/products"
@@ -11,10 +13,31 @@ interface ProductsProps {
     imageUrl: string,
     price: string
     description: string
+    defaultPriceId: string
   }
 }
 
 export default function Product({ product }: ProductsProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true);
+
+      const response = await axios.post('/api/createCheckoutSession', {
+        priceId: product.defaultPriceId
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl;
+
+    } catch (error) {
+      setIsCreatingCheckoutSession(false);
+      // Just as a example best to add an observable (sentry, datadog)
+      alert('Error to redirect user o payment checkout')
+    }
+  }
   return (
     <ProductContainer>
       <ImageContainer>
@@ -24,7 +47,7 @@ export default function Product({ product }: ProductsProps) {
         <h1>{product.name}</h1>
         <span>{product.price}</span>
         <p>{product.description}</p>
-        <button>Buy Now</button>
+        <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>Buy Now</button>
       </ContentContainer>
     </ProductContainer>
   )
@@ -60,6 +83,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
 
         }).format(price.unit_amount / 100),
         description: product.description,
+        defaultPriceId: price.id,
       }
     }
   }
