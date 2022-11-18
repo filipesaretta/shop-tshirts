@@ -58,6 +58,9 @@ export const ContentContainer = styled('div', {
 
     color: '$gray100',
 
+    '&:disabled': {
+      opacity: .5,
+    },
     '&:hover': {
       backgroundColor: '$green300',
     }
